@@ -4,7 +4,7 @@
 
 This project provides an automated protocol for Umbrella Sampling Simulation which generates potential mean forces (PMF) as function of COM distance of the interested molecules. By following this protocol, users can efficiently generate PMF profile from their XYZ coordinates or pdb file. 
 
-![Alt text](./image.png)
+![Alt text](./image1.png)
 
 The process involves several steps, including setting up AutoSolvate virtual environment, installing necessary dependencies, running the main script to generate a solvent box, minimization, heating, equilibration, pulling, constrained MD simulation and finally histrogram analysis with WHAM. These steps are designed to streamline the workflow and provide a comprehensive solution for generation PMF profile.
 
@@ -54,40 +54,27 @@ This will generate system.pdb, system.parm, and system.rst files
 
 Note: Step 1 and Step 2 can be done with our in-house automated software AutoSolvate.
 
-### Step 3: Minimization, Heating and Equilibration
+### Step 3: Minimization, Heating, Equilibration and Pulling Simulation
 
-Perform system minimization, heating, and equilibration for 100ps.
+The two systems initially positioned with a center of mass (COM) distance of 4.5 Å within an 80x80x80 Å cubic solvent box filled with acetonitrile (ACN) solvent (or interested solvent) and subjected to periodic boundary conditions. To ensure the stability of the system, 1000 cycles of energy minimization were performed using the steepest descent method for first 500 steps followed by the conjugate gradient method for the remaining steps. The system then underwent a controlled heating process using Langevin dynamics, with the temperature gradually increased from 0 K to 100 K over 25,000 steps  of 0.05 fs each (nstlim = 25000, dt = 0.00005) with a high collision frequency of 500 ps-1 and from 100 K to 300 K over 10,000 steps of 2 fs each (nstlim = 25000, dt = 0.002) with a collision frequency of 1 ps-1. Subsequently, the system was equilibrated at 300 K and 1.013 bar for 500 ps using the Berendsen barostat with a 2 ps relaxation time, with a 1.0 kcal/mol-Å² harmonic constraint potential applied to maintain the TPAB/BODIPY COM below 0.45 nm. Finally, a pulling simulation was performed to pull the TPAB molecule steadily at a rate of 0.01 nm/ps with a harmonic potential of 1.0 kcal/mol-Å². 
 
-python 3.amber_input.py
+python 3.min_heat_equi_pull.py
 
-### Step 4: Initial Configuration Generation and Geometry Optimization
+### Step 4: Windows (Constrained MD Simulation)
 
-Take snapshots every 1ps from the equilibration trajectory file. The snapshots will be used as guess structrues for ab-initio geometry optimization. 
+From the pulling trajectory, 33 configurations were selected at 0.1 nm intervals, with COM separation ranging from 0.45 nm to 3.65 nm, as starting points for the umbrella sampling simulations. Umbrella sampling was then carried out on these 33 configurations by fixing the positions of system1 and system2 with 0.5 kcal/mol-Å² harmonic potentials and simulating for 2 ns. Energies were saved every 1 ps.
 
-python 4.guess_structrue_optimization.py
+python 4.windows.py
 
-### Step 5: Desity Calculation and Normalization
+### Step 5: PMF Profile Generation
 
-Calculate center of mass (COM) points of system2 molecule from the optimized geometry, calculate density of the COM points and Normalize.
+From the constrained MD simulation, Weighted histogram analysis method (WHAM) was used to calculate PMF profile.
 
-python 5.make_pdb_from_opt.py
-
-bash 6.align_BDP.sh
-
-python 7.pdb_to_xyz.py
-
-bash 8.vdw_surface.sh
-
-### Step 6: Generation of .mol2 File and AIIM
-
-Generate mol2 file, which can be opened with a visualization software like VMD.
-
-python 9.generate_mol2.py
+python 5.pmf.py
 
 ## Getting Started
 
 To begin using this workflow, clone the repository and navigate to the root directory. Ensure that all required Python libraries (`NumPy`, `Cython`, `pyvdwsurface`, etc.) are installed. Follow the steps outlined in the README files within each directory to execute the workflow successfully.
-
 
 ## Contributions
 
