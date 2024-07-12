@@ -16,7 +16,7 @@ Mohammad Pabel Kabir, Fang Liu
 
 > AMBER16 or above
 
-> AutoSolvate
+> AutoSolvate (https://autosolvate.readthedocs.io/en/latest/)
 
 > Packmol (https://m3g.github.io/packmol/)
 
