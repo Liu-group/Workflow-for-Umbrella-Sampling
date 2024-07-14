@@ -26,7 +26,7 @@ Mohammad Pabel Kabir, Fang Liu
 
 ### Step 1: Parameter File Generation for Individual Systems
 
-Prepare a starting coordinates file (pdb or xyz) for the molecules for which you would like to generate an AIIM. Use antechamber to create AMBER parameters for the two systems and the solvent. Here, we use the example of BODIPY (system1) and TPAB (system2) molecules in ACN solvent:
+Prepare a starting coordinates file (pdb or xyz) for the molecules for which you would like to do umbrella sampling simulation. Use antechamber to create AMBER parameters for the two systems and the solvent. Here, we use the example of BODIPY (system1) and TPAB (system2) molecules in ACN solvent:
 
 antechamber -i system1.pdb -fi pdb -o system1.mol2 -fo mol2 -c bcc -s 2
 
