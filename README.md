@@ -28,6 +28,14 @@ Mohammad Pabel Kabir, Fang Liu
 
 Prepare a starting coordinates file (pdb or xyz) for the molecules for which you would like to do umbrella sampling simulation. Use antechamber to create AMBER parameters for the two systems and the solvent. Here, we use the example of BODIPY (system1) and TPAB (system2) molecules in ACN solvent:
 
+obabel system1.xyz -O system1.pdb
+
+antechamber -i system1.pdb -fi pdb -o system1.mol2 -fo mol2 -nc 0 -c bcc -at gaff
+
+parmchk2 -i system1.mol2 -f mol2 -o system1.frcmod
+
+
+
 antechamber -i system1.pdb -fi pdb -o system1.mol2 -fo mol2 -c bcc -s 2
 
 antechamber -i system2.pdb -fi pdb -o system2.mol2 -fo mol2 -c bcc -s 2
