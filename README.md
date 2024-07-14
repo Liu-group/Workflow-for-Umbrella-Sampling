@@ -62,7 +62,7 @@ python 3.min_heat_equi_pull.py
 
 ### Step 4: Windows (Constrained MD Simulation)
 
-From the pulling trajectory, 33 configurations were selected at 0.1 nm intervals, with COM separation ranging from 0.45 nm to 3.65 nm, as starting points for the umbrella sampling simulations. Umbrella sampling was then carried out on these 33 configurations by fixing the positions of system1 and system2 with 0.5 kcal/mol-Å² harmonic potentials and simulating for 2 ns. Energies were saved every 1 ps.
+From the pulling trajectory, 33 configurations will be selected at 0.1 nm intervals, with COM separation ranging from 0.45 nm to 3.65 nm, as starting points for the umbrella sampling simulations. Umbrella sampling was then carried out on these 33 configurations by fixing the positions of system1 and system2 with 0.5 kcal/mol-Å² harmonic potentials and simulating for 2 ns. Energies were saved every 1 ps.
 
 python 4.windows.py
 
