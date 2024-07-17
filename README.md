@@ -10,7 +10,7 @@ The process involves several steps, including setting up AutoSolvate virtual env
 
 ## Authors
 
-Mohammad Pabel Kabir, Fang Liu
+Mohammad Pabel Kabir, Xu Chen, Fang Liu
 
 ## Requirements
 
@@ -26,7 +26,15 @@ Mohammad Pabel Kabir, Fang Liu
 
 ### Step 1: Parameter File Generation for Individual Systems
 
-Prepare a starting coordinates file (pdb or xyz) for the molecules for which you would like to generate an AIIM. Use antechamber to create AMBER parameters for the two systems and the solvent. Here, we use the example of BODIPY (system1) and TPAB (system2) molecules in ACN solvent:
+Prepare a starting coordinates file (pdb or xyz) for the molecules for which you would like to do umbrella sampling simulation. Use antechamber to create AMBER parameters for the two systems and the solvent. Here, we use the example of BODIPY (system1) and TPAB (system2) molecules in ACN solvent:
+
+obabel system1.xyz -O system1.pdb
+
+antechamber -i system1.pdb -fi pdb -o system1.mol2 -fo mol2 -nc 0 -c bcc -at gaff
+
+parmchk2 -i system1.mol2 -f mol2 -o system1.frcmod
+
+
 
 antechamber -i system1.pdb -fi pdb -o system1.mol2 -fo mol2 -c bcc -s 2
 
@@ -62,7 +70,7 @@ python 3.min_heat_equi_pull.py
 
 ### Step 4: Windows (Constrained MD Simulation)
 
-From the pulling trajectory, 33 configurations were selected at 0.1 nm intervals, with COM separation ranging from 0.45 nm to 3.65 nm, as starting points for the umbrella sampling simulations. Umbrella sampling was then carried out on these 33 configurations by fixing the positions of system1 and system2 with 0.5 kcal/mol-Å² harmonic potentials and simulating for 2 ns. Energies were saved every 1 ps.
+From the pulling trajectory, 33 configurations will be selected at 0.1 nm intervals, with COM separation ranging from 0.45 nm to 3.65 nm, as starting points for the umbrella sampling simulations. Umbrella sampling was then carried out on these 33 configurations by fixing the positions of system1 and system2 with 0.5 kcal/mol-Å² harmonic potentials and simulating for 2 ns. Energies were saved every 1 ps.
 
 python 4.windows.py
 
