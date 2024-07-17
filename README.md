@@ -10,7 +10,7 @@ The process involves several steps, including setting up AutoSolvate virtual env
 
 ## Authors
 
-Mohammad Pabel Kabir, Fang Liu
+Mohammad Pabel Kabir, Xu Chen, Fang Liu
 
 ## Requirements
 
